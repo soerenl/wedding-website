@@ -5,25 +5,28 @@
     <div data-row>
       <div data-col="4-md +4-md 12-sm">
         <h2 class="align-center">Anmelden</h2>
-        <p> Schön, dass du hier bist! Um uns Bescheid zu geben, ob du kommen kannst fülle bitte nachfolgende
-        Felder aus..
+        <p> Schön, dass du hier bist! <br />
+        Um uns Bescheid zu geben, ob du kommen kannst fülle bitte nachfolgende
+        Felder aus.
         </p>
           <form action="/code" method="post">
             {% if error === 'wrong_code' %}
-              <div class="alert alert_error">Der Code ist leider falsch. Hast du ihn richtig
+              <div class="alert alert_error">Der Hashtag oder die PLZ sind leider falsch. Hast du ihn richtig
                 eingegeben?
               </div>
             {% endif %}
 
             <div class="form-group">
+              <label :for="email" style="color: #000">Deine E-Mail:</label>
               <div class="input-group">
                 <div class="input-group__addon"><span class="ec-icon email"></span></div>
                 <input type="email" placeholder="E-Mail"
-                      class="input input_big" name="email"/>
-              </div>
+                      class="input input_big" name="email" id"email"/>
+              </div>                        
             </div>
 
             <div class="form-group">
+            <label :for="email" style="color: #000">Sicherheitsfrage 1: Wie lautet der Hastag auf der Rückseite deiner Einladungskarte?</label>
               <div class="input-group">
                 <div class="input-group__addon"><span class="ec-icon hash"></span></div>
                 <input type="text" placeholder="Hashtag"
@@ -32,6 +35,7 @@
             </div>
 
             <div class="form-group">
+            <label :for="email" style="color: #000">Sicherheitsfrage 2: Wie ist die PLZ des Veranstaltungsorts?</label>
               <div class="input-group">
                 <div class="input-group__addon"><span class="ec-icon bank"></span></div>
                 <input type="text" placeholder="Zip-Code"
