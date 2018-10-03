@@ -13,9 +13,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://git@github.com:deyhle/wedding-website.git"
+    "url": "ssh://git@github.com:soerenl/wedding-website.git"
   },
-  "author": "Ruben Deyhle <deyhle@entrecode.de>",
+  "author": "Soeren Leicht <mail@soerenleicht.de>",
   "private": true,
   "dependencies": {
     "ec.sdk": "^0.13.9",
