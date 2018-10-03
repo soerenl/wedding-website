@@ -4,6 +4,10 @@
 @import 'molecules/molecules';
 @import 'organisms/organisms';
 
+html, body{
+  width: 100%;
+}
+
 pre {
   font-family: monospace;
 }
@@ -16,13 +20,14 @@ pre {
   font-family: 'scriblle_script_stdregular';
 }
 
-body {
-  background-image: url('./images/leavesL.svg'), url('./images/leavesR.svg');
-  background-position: left top, right top;
+ .head_image {
+  background-image: url('./images/Top.png');
+  background-position: top;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 240px auto;
-}
+  background-attachment: scroll;
+  background-size: 1400px;
+  padding-top: 150px;
+} 
 
 .avatar_big {
   width: 5rem;
@@ -42,12 +47,12 @@ body {
 }
 
 body.intro {
-  background-image: url('/cover.jpg');
+  background-image: url('');
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  background-color: rgba(getColor(background, invert), .6);
+  background-color: #FFFFFF;
   color: getColor(text, invert);
   background-blend-mode: multiply;
 
@@ -67,3 +72,31 @@ body.intro {
 .nav {
   background-color: rgba(getColor(background), .6);
 }
+
+.btn { background-color: #A6BFC4;}
+
+.btn:hover { background-color: rgb(70, 92, 97);}
+
+.btn_glow.btn {
+  box-shadow: 0 12px 24px -8px #A6BFC4;
+}
+
+.btn_glow.btn:hover {
+  box-shadow: 0 12px 24px -8px #A6BFC4;
+}
+
+.btn.btn_clear {
+  background-color: transparent;
+  color: rgb(71, 88, 92);
+}
+
+.btn.btn_clear.is-active, .btn.btn_clear:focus, .btn.btn_clear:hover {
+  background-color: rgb(70, 92, 97);
+  color: #FFF;
+}
+
+h1, h2 { color: #000;}
+
+p {color: #2a302b;}
+
+body.intro a {color: #000; }

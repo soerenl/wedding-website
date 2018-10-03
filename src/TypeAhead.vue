@@ -72,7 +72,7 @@
         <header class="title has-margin-bottom">
           <h2 class="is-kilo">Aktuelle Wünsche-Playlist</h2>
           <a class="btn btn_minor btn_small"
-             href="https://open.spotify.com/user/1124976920/playlist/5gd8s87gyQR4gctj5wkdo3?si=33ltExCXRMuyCcoszGxGiA">Playlist
+             href="https://open.spotify.com/user/soeren_leicht/playlist/2iDxqZMEmayLq9oQxmZH0l">Playlist
             auf Spotify</a>
         </header>
 

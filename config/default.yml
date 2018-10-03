@@ -1,16 +1,15 @@
-title: Hochzeit CHANGEME
-datamanagerURL: https://datamanager.entrecode.de/api/CHANGEME
+title: Hochzeit Sabrina_and_Soeren
+datamanagerURL: https://datamanager.entrecode.de/api/4b0c5335
 datamanagerRootURL: https://datamanager.entrecode.de
 publicURL: http://localhost:3003/
-fakeEmailDomain: CHANGEME
-shortID: CHANGEME
-dataManagerID: CHANGEME
-accessToken: CHANGEME
+shortID: 4b0c5335
+dataManagerID: ba999d80-5368-4dd2-b2ac-af6d10512c0a
+accessToken: eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6bnVsbCwianRpIjoiNDIzZDU2OTMtNzZjNC00YTZkLWE2NTMtYzgzMjJhZjdlNzk0IiwiaWF0IjoxNTM3ODEwODIwLCJleHAiOjQ2OTE0MTA4MjAsImlzcyI6ImhvY2h6ZWl0X3NvX3NhIiwic3ViIjoiMTAwNWZlOTMtOWEzOS00MGVmLWEwMWQtZTBkMTI1ZDExYjVhIn0.BjJsScxXHycxHLOKN476vLa_McOQzPwrZC6BcTZboVYfUeL4TpXRxvpm_jfDO6pVTNq3HurPf31rvPn1YPuNsR8fBDROrzPZWrbLysHjnBKa4RD6mAPaZp7plKC2yUg5BMWS9hufeml2CX7nPK6N70itJQK2UTh2osqAJd2RF2M
 spotify: 
-  user: CHANGEME # access code, NOT your spotify username!
-  password: CHANGEME # access secret, NOT your spotify password!
-  settingsEntryID: CHANGEME
-  playlistURL: https://api.spotify.com/v1/users/CHANGEME/playlists/CHANGEME/tracks
+  user: 640e6c77c3b9427f980d16b476c09438 # access code, NOT your spotify username!
+  password: b1ef5b228bcd463fbfe14ba4cdf4a645 # access secret, NOT your spotify password!
+  settingsEntryID: LJ_rkaQ5hUA
+  playlistURL: https://api.spotify.com/v1/users/soeren_leicht/playlists/2iDxqZMEmayLq9oQxmZH0l/tracks
 useSDK: true
 locale: de                # for date/time formatting
 timezone: Europe/Berlin   # for date/time formatting

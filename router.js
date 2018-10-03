@@ -20,8 +20,8 @@ csp['script-src'] = [
   '\'unsafe-eval\'',
 ];
 csp['connect-src'] = [
-  csp.SELF,
-  '*.entrecode.de',
+ csp.SELF,
+ '*.entrecode.de',
 ];
 csp['style-src'] = [
   csp.SELF,
@@ -35,8 +35,8 @@ csp['font-src'] = [
   csp.SELF,
 ];
 csp['child-src'] = [
-  'https://www.google.com',
-  'https://open.spotify.com',
+ 'https://www.google.com',
+ 'https://open.spotify.com',
 ];
 csp['img-src'] = [
   '*',
@@ -54,14 +54,14 @@ router.get('/', (req, res) => {
 });
 
 router.post('/code', async (req, res) => {
-  const { code } = req.body;
+  const { hashtag, zipcode, email } = req.body;
   // login with code
-  try {
-    const token = await auth.loginWithCode(code.toUpperCase());
+
+  if(hashtag.toLowerCase() === 'whiteleierwiesen' && zipcode === '89547') {
+    const token = await auth.register(email);
     res.cookie('auth', token, { maxAge: 1000 * 60 * 60 * 24 * 28 });
-    // redirect to rsvp
     res.redirect('/rsvp');
-  } catch (e) {
+  } else {
     res.redirect('/?error=wrong_code');
   }
 });
@@ -95,13 +95,39 @@ router.get('/rsvp', cache.middleware(60), async (req, res) => {
   }
   const userdm = new PublicAPI(config.datamanagerURL, { noCookie: true });
   userdm.setToken(cookie);
-  const guests = await userdm.entryList('guest');
+  let guests = await userdm.entryList('guest');
+
+  if(!guests.items.length) {
+    const { email } = await userdm.me();
+
+    const newGuestEntry = await userdm.createEntry('guest', {
+      name: '',
+      answer: 0,
+      overnight: 0,
+      isChild: false,
+      onlyCeremony: false,
+      onlyParty: false,
+      email,
+    });
+    
+    guests = {
+      items: [newGuestEntry],
+    };
+  }
+
+
   res.render('rsvp.njk', {
     error: req.query.error,
     guests: guests.items,
     loggedIn: true,
   });
 });
+
+router.post('/rsvp', async (req, res) => {
+  const userdm = new PublicAPI(config.datamanagerURL, { noCookie: true });
+  userdm.setToken(cookie);
+  const myGuestEntry = await userdm.createEntry('guest', req.body);
+})
 
 router.get('/logout', async (req, res) => {
   res.cookie('auth', null, { maxAge: 0 } );
@@ -110,15 +136,15 @@ router.get('/logout', async (req, res) => {
 
 
 router.get('/music-search', async (req, res) => {
-  res.send(await spotify.search(req.query.q));
+ res.send(await spotify.search(req.query.q));
 });
 
 router.get('/music-get', cache.middleware(60), async (req, res) => {
-  res.send(await spotify.getPlaylistContent());
+ res.send(await spotify.getPlaylistContent());
 });
 
 router.post('/music-add/:uri', async (req, res) => {
-  res.send(await spotify.addToPlaylist(req.params.uri));
+ res.send(await spotify.addToPlaylist(req.params.uri));
 });
 
 if (process.env.NODE_ENV !== 'production') {

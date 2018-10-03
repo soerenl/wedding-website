@@ -38,6 +38,7 @@ Vue.component('rsvp-component', {
   },
   methods: {
     async save(guest) {
+      console.log("save", guest);
       try {
         const response = await this.$http.put(
           guest._links.self[0].href,
