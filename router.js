@@ -20,8 +20,8 @@ csp['script-src'] = [
   '\'unsafe-eval\'',
 ];
 csp['connect-src'] = [
- csp.SELF,
- '*.entrecode.de',
+  csp.SELF,
+  '*.entrecode.de',
 ];
 csp['style-src'] = [
   csp.SELF,
@@ -35,8 +35,8 @@ csp['font-src'] = [
   csp.SELF,
 ];
 csp['child-src'] = [
- 'https://www.google.com',
- 'https://open.spotify.com',
+  'https://www.google.com',
+  'https://open.spotify.com',
 ];
 csp['img-src'] = [
   '*',
@@ -57,7 +57,7 @@ router.post('/code', async (req, res) => {
   const { hashtag, zipcode, email } = req.body;
   // login with code
 
-  if(hashtag.toLowerCase() === 'whiteleierwiesen' && zipcode === '89547') {
+  if (hashtag.toLowerCase() === 'whiteleierwiesen' && zipcode === '89547') {
     const token = await auth.register(email);
     res.cookie('auth', token, { maxAge: 1000 * 60 * 60 * 24 * 28 });
     res.redirect('/rsvp');
@@ -83,7 +83,7 @@ router.post('/email', async (req, res) => {
 router.get('/login', async (req, res) => {
   const { token: mailtoken } = req.query;
   const token = await auth.loginWithToken(mailtoken);
-  res.cookie('auth', token, { maxAge: 1000 * 60 * 60 * 24 * 28} );
+  res.cookie('auth', token, { maxAge: 1000 * 60 * 60 * 24 * 28 });
   res.redirect('/rsvp');
 });
 
@@ -97,25 +97,20 @@ router.get('/rsvp', cache.middleware(60), async (req, res) => {
   userdm.setToken(cookie);
   let guests = await userdm.entryList('guest');
 
-  if(!guests.items.length) {
+  if (!guests.items.length) {
     const { email } = await userdm.me();
 
-    try{
-      const newGuestEntry = await userdm.createEntry('guest', {
-        name: '',
-        answer: 0,
-        overnight: 0,
-        numberOfGuests: 1,
-        email,
-      });
+    const newGuestEntry = await userdm.createEntry('guest', {
+      name: '',
+      answer: 0,
+      overnight: 0,
+      numberOfGuests: 1,
+      email,
+    });
 
-      guests = {
-        items: [newGuestEntry],
-      };
-    } catch(e) {
-      console.error(e)
-    }
-
+    guests = {
+      items: [newGuestEntry],
+    };
   }
 
   res.render('rsvp.njk', {
@@ -129,24 +124,23 @@ router.post('/rsvp', async (req, res) => {
   const userdm = new PublicAPI(config.datamanagerURL, { noCookie: true });
   userdm.setToken(cookie);
   const myGuestEntry = await userdm.createEntry('guest', req.body);
-})
+});
 
 router.get('/logout', async (req, res) => {
-  res.cookie('auth', null, { maxAge: 0 } );
+  res.cookie('auth', null, { maxAge: 0 });
   res.redirect('/');
 });
 
-
 router.get('/music-search', async (req, res) => {
- res.send(await spotify.search(req.query.q));
+  res.send(await spotify.search(req.query.q));
 });
 
 router.get('/music-get', cache.middleware(60), async (req, res) => {
- res.send(await spotify.getPlaylistContent());
+  res.send(await spotify.getPlaylistContent());
 });
 
 router.post('/music-add/:uri', async (req, res) => {
- res.send(await spotify.addToPlaylist(req.params.uri));
+  res.send(await spotify.addToPlaylist(req.params.uri));
 });
 
 if (process.env.NODE_ENV !== 'production') {
@@ -156,7 +150,10 @@ if (process.env.NODE_ENV !== 'production') {
     if (code) {
       expiration = await spotify.getAuthForCode(code);
     }
-    return res.render('spotify.njk', { redirect_uri: `${config.get('publicURL')}spotify`, expiration });
+    return res.render('spotify.njk', {
+      redirect_uri: `${config.get('publicURL')}spotify`,
+      expiration
+    });
   });
 }
 
@@ -183,8 +180,6 @@ router.get('/:route', async (req, res) => {
     throw e;
   }
 });
-
-
 
 router.use((error, req, res, next) => {
   res.render('message.njk', { error });
