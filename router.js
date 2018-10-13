@@ -100,19 +100,22 @@ router.get('/rsvp', cache.middleware(60), async (req, res) => {
   if(!guests.items.length) {
     const { email } = await userdm.me();
 
-    const newGuestEntry = await userdm.createEntry('guest', {
-      name: '',
-      answer: 0,
-      overnight: 0,
-      isChild: false,
-      onlyCeremony: false,
-      onlyParty: false,
-      email,
-    });
+    try{
+      const newGuestEntry = await userdm.createEntry('guest', {
+        name: '',
+        answer: 0,
+        overnight: 0,
+        numberOfGuests: 1,
+        email,
+      });
 
-    guests = {
-      items: [newGuestEntry],
-    };
+      guests = {
+        items: [newGuestEntry],
+      };
+    } catch(e) {
+      console.error(e)
+    }
+
   }
 
   res.render('rsvp.njk', {

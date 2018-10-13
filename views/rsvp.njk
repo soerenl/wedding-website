@@ -10,8 +10,8 @@
   <div data-grid="is-center">
     <div data-col="8-sm 6-xl">
       <h1 class="is-mega">Rückmeldung</h1>
-      <p>Gebt uns bitte bis zum DATUM Bescheid, ob ihr kommen könnt. Falls ihr übernachten wollt, 
-      übernehmt die Reservierung bitte selbst. Alle Infos findet ihr
+      <p>Gebt uns bitte bis zum DATUM Bescheid, ob ihr kommen könnt. Falls ihr übernachten wollt,
+        übernehmt die Reservierung bitte selbst. Alle Infos findet ihr
         im Menüpunkt <a href="/location">Location</a>.</p>
       <p>Gerne kannst du uns Rückmeldung über das folgende Formular geben:</p>
 
@@ -24,19 +24,19 @@
       {% raw %}
         <rsvp-component inline-template>
           <div><!-- empty div necessary for vue! -->
-          <p>Du kannst {{ guestsJSON.length }} Person<span v-if="guestsJSON.length > 1">en</span> anmelden
-          und die Angaben auch jederzeit ändern. Sie werden automatisch gespeichert.</p>
-            <div v-for="(item, index) in guestsJSON" class="has-margin-middle has-padding is-theme_dark">
+            <div v-for="(item, index) in guestsJSON"
+                 class="has-margin-middle has-padding is-theme_dark">
               <div data-grid>
                 <div data-col="12">
                   <label for="name">Name</label>
-                  <input type="text" class="input" v-model.text="item.name" id="name" @change="saved=false">
+                  <input type="text" class="input" v-model.text="item.name" id="name"
+                         @change="saved=false">
                 </div>
               </div>
               <div class="spacer"></div>
               <div data-grid v-if="item.name.length">
                 <div data-col="12">
-                  <p class="is-lead">{{ item.name }}, kommst du zu unserer Hochzeit?</p>
+                  <p class="is-lead">Liebe(r) {{ item.name }}, kommst du zu unserer Hochzeit?</p>
                   <div data-row>
                     <div data-col="6-sm">
                       <div class="xui-radio">
@@ -68,28 +68,47 @@
                 </div>
               </div>
 
-              <div v-if="item.answer > 0">
+              <div data-row v-if="item.answer > 0">
                 <div class="xui-select" data-col="6-sm">
                   <label :for="'rsvp-' + index + '-guestCount'">Anzahl der Personen:</label>
-                  <input v-model.number="item.answer" :id="'rsvp-' + index + '-guestCount'"
-                         value="1" type="text" @change="saved=false">
+                  <select v-model.number="item.numberOfGuests" @change="saved=false"
+                          :id="'rsvp-' + index + '-guestCount'">
+                    <option value="1">Ich komme alleine</option>
+                    <option value="2">Wir sind zu zweit</option>
+                    <option value="3">Wir sind zu dritt</option>
+                    <option value="4">Wir sind zu viert</option>
+                    <option value="5">Wir sind zu fünft</option>
+                    <option value="6">Wir sind zu sechst</option>
+                  </select>
                 </div>
-                <div class="spacer"></div>
-                <div class="">
+              </div>
+
+              <div class="spacer" v-if="item.numberOfGuests > 1"></div>
+              <div data-row v-if="item.numberOfGuests > 1">
+                <div data-col="12">
+                  <p class="lead">Wen bringst du mit?</p>
+                  <small v-if="item.numberOfGuests > 2">Bitte pro Zeile einen Namen.</small>
+                  <textarea class="input" v-model="item.nameOfGuests" @change="saved=false"></textarea>
+                </div>
+              </div>
+
+              <div class="spacer"></div>
+
+              <div data-row>
+                <div data-col="12">
                   <input v-model="item.overnight" :id="'rsvp-' + index + '-overnight'"
                          type="checkbox"
                          :disabled="!(item.answer === 1)" @change="saved=false">
                   <label :for="'rsvp-' + index + '-overnight'">
                     mit Übernachtung
                   </label>
-                </div>
-                <div class="alert alert_small alert_minor has-margin-top" v-if="item.overnight">
-                  Dies ist nur eine Info für uns.
-                  Bitte <a href="/location" class="is-bold">buchen</a> nicht vergessen!
+                  <div class="alert alert_small alert_minor has-margin-top" v-if="item.overnight">
+                    Dies ist nur eine Info für uns.
+                    Bitte <a href="/location" class="is-bold">buchen</a> nicht vergessen!
+                  </div>
                 </div>
               </div>
 
-              <div class="spacer"></div>
               <div class="form-group">
                 <label :for="'rsvp-' + index + '-preferences'">Hier kannst du uns noch etwas
                   mitteilen:</label>
@@ -105,7 +124,7 @@
             </div>
 
             <ul class="is-inline">
-              <li>
+              <li class="pull-right">
                 <a v-if="!saving" v-on:click="saveAll" class="btn">Speichern</a>
                 <a v-if="saving" disabled class="btn">Speichern</a>
               </li>
