@@ -3,7 +3,6 @@
 {% block customscript %}
   <script>
     window.guests = {{ guests | json }};
-    console.log(guestsJSON);
   </script>
 {% endblock %}
 
@@ -28,53 +27,68 @@
           <p>Du kannst {{ guestsJSON.length }} Person<span v-if="guestsJSON.length > 1">en</span> anmelden
           und die Angaben auch jederzeit ändern. Sie werden automatisch gespeichert.</p>
             <div v-for="(item, index) in guestsJSON" class="has-margin-middle has-padding is-theme_dark">
-              <h2 class="is-kilo has-margin-bottom-big">{{ item.name }}</h2>
-              <div data-grid="">
-              <div data-col="10-sm">
-                <div class="form-group">
-                  <label for="name" data-col="2">
-                    <strong>Name: </strong>
-                  </label>
-                  <div data-col="10">
-                  <input type="text" id="name" v-model="item.name" @change="saved=false">
-                  </div>
+              <div data-grid>
+                <div data-col="12">
+                  <label for="name">Name</label>
+                  <input type="text" class="input" v-model.text="item.name" id="name" @change="saved=false">
                 </div>
-              </div>
-                <div data-col="6-sm">
-                  <div class="xui-radio">
-                    <input v-model.number="item.answer" :id="'rsvp-' + index + '-answer-yes'"
-                           value="1" type="radio" @change="saved=false">
-                    <label :for="'rsvp-' + index + '-answer-yes'">Ich komme!</label>
-                  </div>
-                  <div class="spacer-small is-hidden-from-md"></div>
-                </div>
-                <div data-col="6-sm">
-                  <div class="xui-radio">
-                    <input v-model.number="item.answer" :id="'rsvp-' + index + '-answer-no'"
-                           value="-1" type="radio" @change="saved=false">
-                    <label :for="'rsvp-' + index + '-answer-no'">Ich kann leider nicht kommen</label>
-                  </div>
-                  <div class="spacer-small is-hidden-from-md"></div>
-                </div>
-              </div>
-              <div class="xui-select" v-if="item.numberOfGuests" data-col="6-sm">
-                  <label :for="'rsvp-' + index + '-guestCount'">Anzahl der Personen:</label>
-                    <input v-model.number="item.answer" :id="'rsvp-' + index + '-guestCount'"
-                           value="1" type="text" @change="saved=false">
               </div>
               <div class="spacer"></div>
-              <div class="">
-                <input v-model="item.overnight" :id="'rsvp-' + index + '-overnight'"
-                       type="checkbox"
-                       :disabled="!(item.answer === 1)" @change="saved=false">
-                <label :for="'rsvp-' + index + '-overnight'">
-                  mit Übernachtung
-                </label>
+              <div data-grid v-if="item.name.length">
+                <div data-col="12">
+                  <p class="is-lead">{{ item.name }}, kommst du zu unserer Hochzeit?</p>
+                  <div data-row>
+                    <div data-col="6-sm">
+                      <div class="xui-radio">
+                        <input v-model.number="item.answer" :id="'rsvp-' + index + '-answer-yes'"
+                               value="1" type="radio" @change="saved=false">
+                        <label :for="'rsvp-' + index + '-answer-yes'">Ja!</label>
+                      </div>
+                      <div class="spacer-small is-hidden-from-md"></div>
+                    </div>
+                    <div data-col="6-sm">
+                      <div class="xui-radio">
+                        <input v-model.number="item.answer" :id="'rsvp-' + index + '-answer-no'"
+                               value="-1" type="radio" @change="saved=false">
+                        <label :for="'rsvp-' + index + '-answer-no'">Leider nein…</label>
+                      </div>
+                      <div class="spacer-small is-hidden-from-md"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="alert alert_small alert_minor has-margin-top" v-if="item.overnight">
-              Dies ist nur eine Info für uns.
-                Bitte <a href="/location" class="is-bold">buchen</a> nicht vergessen!
+
+              <div class="spacer"></div>
+
+              <div data-row>
+                <div data-col="12">
+                  <p class="has-padding lead" v-if="item.answer === -1">
+                    <strong>Das ist schade!</strong>
+                  </p>
+                </div>
               </div>
+
+              <div v-if="item.answer > 0">
+                <div class="xui-select" data-col="6-sm">
+                  <label :for="'rsvp-' + index + '-guestCount'">Anzahl der Personen:</label>
+                  <input v-model.number="item.answer" :id="'rsvp-' + index + '-guestCount'"
+                         value="1" type="text" @change="saved=false">
+                </div>
+                <div class="spacer"></div>
+                <div class="">
+                  <input v-model="item.overnight" :id="'rsvp-' + index + '-overnight'"
+                         type="checkbox"
+                         :disabled="!(item.answer === 1)" @change="saved=false">
+                  <label :for="'rsvp-' + index + '-overnight'">
+                    mit Übernachtung
+                  </label>
+                </div>
+                <div class="alert alert_small alert_minor has-margin-top" v-if="item.overnight">
+                  Dies ist nur eine Info für uns.
+                  Bitte <a href="/location" class="is-bold">buchen</a> nicht vergessen!
+                </div>
+              </div>
+
               <div class="spacer"></div>
               <div class="form-group">
                 <label :for="'rsvp-' + index + '-preferences'">Hier kannst du uns noch etwas

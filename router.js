@@ -109,12 +109,11 @@ router.get('/rsvp', cache.middleware(60), async (req, res) => {
       onlyParty: false,
       email,
     });
-    
+
     guests = {
       items: [newGuestEntry],
     };
   }
-
 
   res.render('rsvp.njk', {
     error: req.query.error,
