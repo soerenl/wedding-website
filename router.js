@@ -188,8 +188,8 @@ router.use((error, req, res, next) => {
 if (module.parent) {
   module.exports = express;
 } else {
-  const port = process.env.port || 3003;
+  const port = process.env.PORT || 3003;
   express.listen(port, () => {
-    console.log(`dev server listening at http://localhost:${port}/`);
+    console.log(`dev server listening at ${port}`);
   });
 }
