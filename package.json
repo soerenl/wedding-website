@@ -42,7 +42,7 @@
     "html-validator": "^2.2.3",
     "mocha": "^4.1.0",
     "mocha-bamboo-reporter": "^1.1.1",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.13.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "supertest": "^3.0.0",
